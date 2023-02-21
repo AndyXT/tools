@@ -1,0 +1,19 @@
+#!/bin/bash
+sourcefile=$PWD/$1
+projname=$2
+#filename="$(ls *-$projname.md)"
+filename=$(find . -name "*-$projname.md" -print -quit)
+
+echo "## Code Description" >> "$filename"
+echo "$(date +"%Y%m%d %H:%M:%S")" >> "$filename"
+echo "* add description" >> "$filename"
+echo "" >> "$filename"
+echo "### Source File: " >> "$filename"
+echo "* [$1]($sourcefile)" >> "$filename"
+echo "" >> "$filename"
+echo "### Snippet:" >> "$filename"
+echo "\`\`\`c" >> "$filename"
+while IFS= read -r line; do
+    echo "$line" >> "$filename"
+done
+echo "\`\`\`" >> "$filename"

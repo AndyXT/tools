@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo "Is this a new Project? (yes or no)"
+read -r response
+
+if [ "$response" == "yes" ]; then
+  echo "You said yes, so we will proceed."
+  echo "What is the project name?"
+  read -r projname
+  ./projtemp "$projname"
+  exit 0
+elif [ "$response" == "no" ]; then
+  echo "You said no, so we will continue without starting a new project template."
+  echo "What is the project name?"
+  read -r projname
+else
+  echo "You did not enter a valid response. Please enter 'yes' or 'no'."
+fi
+
+echo "Function: "
+read -r func
+echo "Source File "
+read -r src
+
+./getfunc2 "$func" "$src" | ./notetemp "$src" "$projname"

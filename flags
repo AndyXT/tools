@@ -1,0 +1,19 @@
+#!/bin/bash
+while getopts "f:v" opt; do
+  case $opt in
+    f)
+      file=$OPTARG
+      ;;
+    v)
+      verbose=1
+      ;;
+    *)
+      echo "Invalid option: -$opt"
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND-1))
+
+# Rest of the script
+

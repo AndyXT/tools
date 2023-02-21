@@ -1,0 +1,16 @@
+#!/bin/bash
+
+projname=$1
+filename="$(date +"%Y%m%d")-$projname.md"
+
+echo "# Project: $projname" > "$filename"
+echo "" >> "$filename"
+echo "## Goals" >> "$filename"
+echo "* " >> "$filename"
+echo "" >> "$filename"
+echo "## Tasks" >> "$filename"
+echo "* " >> "$filename"
+echo "" >> "$filename"
+echo "## Dates" >> "$filename"
+echo "* initiated: $(date +"%Y-%m-%d %a")" >> "$filename"
+echo "" >> "$filename"

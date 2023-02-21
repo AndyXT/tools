@@ -1,0 +1,50 @@
+#!/bin/bash
+
+function_name=$1
+file_name=$2
+output=$(ack -A 100 "\b$function_name\s*\(" "$file_name")
+
+start_index=-1
+IFS=$'\n' read -rd '' -a lines <<< "$output"
+for i in "${!lines[@]}"; do
+  if [[ "${lines[$i]}" == *"$function_name("* ]]; then
+    start_index=$i
+    break
+  fi
+done
+
+if [[ $start_index -eq -1 ]]; then
+  echo "Function not found."
+  exit 1
+fi
+
+end_index=$start_index
+while [[ $end_index -lt ${#lines[@]}-1 && "${lines[$end_index+1]}" != ^[[:space:]]*"}"$ ]]; do
+  ((end_index++))
+done
+
+function_lines=("${lines[@]:$start_index:$end_index-$start_index+1}")
+indentation_level=$(echo "${function_lines[0]}" | awk '{sub(/^[[:space:]]+/, ""); print length($0)}')
+formatted_lines=()
+for i in "${function_lines[@]}"; do
+    echo "$i"
+done
+
+#formatted_lines=()
+#for ((i=start_index; i<=end_index; i++)); do
+#  line="${lines[$i]}"
+#  line=$(echo "$line" | sed -E 's/^\s+//')
+#  formatted_lines+=("$line")
+#done
+
+formatted_function=$(printf '%s\n' "${formatted_lines[@]}")
+echo "$formatted_function"
+#for line in "${function_lines[@]}"; do
+#  formatted_lines+=("${line:$indentation_level}")
+#done
+#
+#for i in "${formatted_lines[@]}"; do
+#    echo "$i"
+#done
+#echo "${formatted_lines[@]}"
+
