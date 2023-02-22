@@ -1,11 +1,14 @@
 #!/bin/bash
-while getopts "f:v" opt; do
+while getopts "f:v:h" opt; do
   case $opt in
     f)
       file=$OPTARG
       ;;
     v)
       verbose=1
+      ;;
+    h)
+      help=1
       ;;
     *)
       echo "Invalid option: -$opt"
@@ -17,3 +20,7 @@ shift $((OPTIND-1))
 
 # Rest of the script
 
+if [ $help -eq 1 ]; then
+    echo "-f    specify file"
+    echo "-v    verbose"
+fi
