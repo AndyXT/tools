@@ -1,0 +1,27 @@
+#!/bin/bash
+
+projname=$1
+filename="$(date +"%Y%m%d%H%M%S")-$projname.md"
+
+echo "# Title $projname" > "$filename"
+echo "Tag: "
+read -ra tags
+taglist="## Tags: "
+
+for element in "${tags[@]}"
+do
+    taglist+="@$element"
+    taglist+=" "
+done
+
+echo "$taglist" >> "$filename"
+
+echo "## Notes" >> "$filename"
+echo "* " >> "$filename"
+echo "" >> "$filename"
+
+echo "## Dates" >> "$filename"
+echo "* initiated: $(date +"%Y-%m-%d %a")" >> "$filename"
+echo "" >> "$filename"
+
+vim +4 $filename +"norm 2|"
